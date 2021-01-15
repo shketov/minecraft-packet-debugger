@@ -7,11 +7,12 @@ const states = minecraft.states;
 
 const server = minecraft.createServer({
     "online-mode": false,
+    "motd": `minecraft-packet-debugger\nServer: ${config.host}:${config.port}`,    
+    'maxPlayers': 10,
     "port": config.proxy_port,
     "keepAlive": false,
     "version": config.version
 });
-
 
 minecraft.ping({ host: "localhost", port: config.local_port }, (err, data) => {
     if(!data){
@@ -44,8 +45,8 @@ server.on('login', function (client) {
     // Catching packets that the player sent to the server
     client.on('packet', function (data, meta) {
         if(targetClient.state === states.PLAY && meta.state === states.PLAY){
-            fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name}\n${JSON.stringify(data)}\n`);
-            console.log(`${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name}\n${JSON.stringify(data)}\n`)
+            fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name} ${JSON.stringify(data)}\n`);
+            console.log(`${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name} ${JSON.stringify(data)}\n`)
         }
         if(!endedTargetClient){
             targetClient.write(meta.name, data);
@@ -54,8 +55,8 @@ server.on('login', function (client) {
     // Catching packets that the server sent to the player
     targetClient.on('packet', function (data, meta) {
         if(meta.state === states.PLAY && client.state === states.PLAY){
-            fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT <- SERVER: ${targetClient.state}.${meta.name}\n${JSON.stringify(data)}\n`);
-            console.log(`${getTime()} CLIENT <- SERVER: ${targetClient.state}.${meta.name}\n${JSON.stringify(data)}\n`)
+            fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT <- SERVER: ${targetClient.state}.${meta.name} ${JSON.stringify(data)}\n`);
+            console.log(`${getTime()} CLIENT <- SERVER: ${targetClient.state}.${meta.name} ${JSON.stringify(data)}\n`)
         }
         if(!endedClient){
             client.write(meta.name, data);
