@@ -1,0 +1,16 @@
+{
+  "name": "minecraft-packet-debugger",
+  "version": "1.0.0",
+  "description": "Catching Minecraft packages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shketov",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "minecraft-protocol": "^1.22.0",
+    "moment": "^2.29.1"
+  }
+}

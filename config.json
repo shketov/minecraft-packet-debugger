@@ -1,0 +1,7 @@
+{
+    "host": "play.lastcraft.net",
+    "port": 25565,
+    "version": "1.12.2",
+    "proxy_port": 25566,
+    "local_port": 25565
+}
