@@ -104,6 +104,6 @@ function getTime(){
 }
 
 function getDate(){
-    let date = moment(new Date()).format("DD-MM-YYYY H-mm-ss");
+    let date = moment(new Date()).format("DD.MM.YYYY H-mm-ss");
     return date;
 }
