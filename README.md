@@ -21,13 +21,6 @@
 
 ## Settings
 
-  * Open `config.json`
-  * In `host` and `port` insert the IP address and port of the server whose packets you want to catch
-  * Select `version` (Version of the regular and local server must match. Supported versons: 1.7, 1.8, 1.9, 1.10, 1.11.2, 1.12.2, 1.13.2, 1.14.4, 1.15.2 and 1.16.4)
-  * Change `proxy_port` and `local_port` if necessary
-
-## Settings
-
   In the `config.json` you have the ability to change some parameters:
   * `host` - IP of the server you want to connect to
   * `port` - server port (usually `25565`)
