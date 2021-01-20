@@ -43,17 +43,24 @@ server.on('login', function (client) {
         version: config.version
     });
     // Catching packets that the player sent to the server
-    client.on('packet', function (data, meta) {
-        if(targetClient.state === states.PLAY && meta.state === states.PLAY){
-            fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name} ${JSON.stringify(data)}\n`);
-            console.log(`${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name} ${JSON.stringify(data)}\n`)
-        }
-        if(!endedTargetClient){
-            targetClient.write(meta.name, data);
+    client.on('packet', function (data, meta){
+        if(config.hidden_packets.includes(meta.name)){
+            return;
+        }else{
+            if(targetClient.state === states.PLAY && meta.state === states.PLAY){
+                fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name} ${JSON.stringify(data)}\n`);
+                console.log(`${getTime()} CLIENT -> SERVER: ${client.state}.${meta.name} ${JSON.stringify(data)}\n`)
+            }
+            if(!endedTargetClient){
+                targetClient.write(meta.name, data);
+            }
         }
     });
     // Catching packets that the server sent to the player
-    targetClient.on('packet', function (data, meta) {
+    targetClient.on('packet', function (data, meta){
+        if(config.hidden_packets.includes(meta.name)){
+            return;
+        }else{
         if(meta.state === states.PLAY && client.state === states.PLAY){
             fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} CLIENT <- SERVER: ${targetClient.state}.${meta.name} ${JSON.stringify(data)}\n`);
             console.log(`${getTime()} CLIENT <- SERVER: ${targetClient.state}.${meta.name} ${JSON.stringify(data)}\n`)
@@ -64,18 +71,19 @@ server.on('login', function (client) {
                 client.compressionThreshold = data.threshold
             }
         }
+    }
     });
 
     // Closing target client by client
     client.on('end', function () {
         endedTargetClient = true
-        fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} Connection closed by client from ${client.socket.remoteAddress}`);
+        fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} Connection closed by client from ${client.socket.remoteAddress}\n`);
         console.log(`${getTime()} Connection closed by client from ${client.socket.remoteAddress}`);
         targetClient.end(`${getTime()} Connection closed by client from ${client.socket.remoteAddress}`);
     });
     client.on('error', function (err) {
         endedTargetClient = true
-        fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} Connection closed by client error from ${client.socket.remoteAddress}`);
+        fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} Connection closed by client error from ${client.socket.remoteAddress}\n`);
         console.log(`${getTime()} Connection closed by client error from ${client.socket.remoteAddress}`);
         console.log(err.stack)
         targetClient.end(`${getTime()} Connection closed by client error from ${client.socket.remoteAddress}`);
@@ -91,7 +99,7 @@ server.on('login', function (client) {
     targetClient.on('error', function (err) {
         endedClient = true
         fs.appendFileSync(`./logs/${log_name}.txt`, `${getTime()} Connection closed by server error from ${client.socket.remoteAddress}\n`);
-        console.log(`${getTime()} Connection closed by server error from ${client.socket.remoteAddress}\n`);
+        console.log(`${getTime()} Connection closed by server error from ${client.socket.remoteAddress}`);
         console.log(err.stack)
         client.end(`${getTime()} Connection closed by server error from ${client.socket.remoteAddress}`);
     });
