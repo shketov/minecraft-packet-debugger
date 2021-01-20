@@ -24,6 +24,7 @@
   * Change `proxy_port` and `local_port` if necessary
 
 ## TODO:
-  * Ignoring the unnecessary packets
+  * ~~Ignoring the unnecessary packets~~
+  * New README.md
 
 
