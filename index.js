@@ -16,13 +16,33 @@ const server = minecraft.createServer({
 
 minecraft.ping({ host: "localhost", port: config.local_port }, (err, data) => {
     if(!data){
-        console.log(`[ERR] First start the local Minecraft server on port ${config.local_port}`);
-        process.exit()
+        if(!config.local_server){
+            console.log(`[ERR] First start the local Minecraft server on port ${config.local_port}`);
+            process.exit()
+        }else{
+            /*
+                Create local minecraft server if config.json.local_server = true
+                Do not use if you use this utility to collect packets from a real player,
+                most likely, you will not be able to connect to the server
+                Perhaps, in the future, I will finish it
+            */
+            minecraft.createServer({
+                "online-mode": false,
+                "motd": `minecraft-packet-debugger\nDon't join to this server`,    
+                'maxPlayers': 10,
+                "port": config.local_port,
+                "keepAlive": false,
+                "version": config.version
+            });
+            console.log(`[ALERT] Local server automaticly started on ${config.local_port} port\nThis option is only suitable for collecting bot packets`)
+            console.log(`[INFO] Connect to localhost:${config.proxy_port} to catch packets\n[INFO] Target server: ${config.host}:${config.port}, version: ${config.version}`);
+        }
     }else{
-        console.log(`[INFO] Connect to localhost:${config.proxy_port} to catch packets`);
-        console.log(`[INFO] Target server: ${config.host}:${config.port}, version: ${config.version}`);
+        console.log(`[INFO] Connect to localhost:${config.proxy_port} to catch packets\n[INFO] Target server: ${config.host}:${config.port}, version: ${config.version}`);
     }
 });
+
+
 
 // Log file
 var log_name = `${config.host} ${getDate()}`
