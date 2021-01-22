@@ -23,14 +23,17 @@
 
   In the `config.json` you have the ability to change some parameters:
   * `host` - IP of the server you want to connect to
-  * `port` - server port (usually `25565`)
+  * `port` - server port (default `25565`)
   * `version` - server version
-  * `proxy_port` - proxy server port to connect to (usually `25566`, not recommended to change)
-  * `local_port` - `proxy` server port to connect to (usually `25565`, not recommended to change)
+  * `proxy_port` - proxy server port to connect to (default `25566`, not recommended to change)
+  * `local_server` - automatic raising of the local server (default `false`)
+  > Important! Do not enable the automatic local server if you are trying to catch the packets of a real player. In 90% of cases, you will not be able to connect
+  * `local_port` - `proxy` server port to connect to (default `25565`, not recommended to change)
   * `hidden_packets` - an array containing the names of packages that should not be displayed in the terminal and logs
 
 ## TODO:
   * ~~Ignoring the unnecessary packets~~
   * ~~New README.md~~
-  * Automatically turn on the local server using [flying-squid](https://github.com/PrismarineJS/flying-squid)
-
+  * ~~~Automatically turn on the local server~~~
+  * Upload logs on pastebin
+  * Error handling if the proxy or local server port is already being listened on
