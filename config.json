@@ -1,13 +1,11 @@
 {
-    "host": "play.litecloud.me",
+    "host": "play.lastcraft.net",
     "port": 25565,
     "version": "1.12.2",
     "proxy_port": 25566,
+    "local_server": false,
     "local_port": 25565,
     "hidden_packets": [
-        "map_chunk",
-        "keep_alive",
-        "experience",
-        "custom_payload"
+        "map_chunk"
     ]
 }
