@@ -34,6 +34,6 @@
 ## TODO:
   * ~~Ignoring the unnecessary packets~~
   * ~~New README.md~~
-  * ~~~Automatically turn on the local server~~~
+  * ~~Automatically turn on the local server~~
   * Upload logs on pastebin
   * Error handling if the proxy or local server port is already being listened on
