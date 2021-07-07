@@ -9,7 +9,6 @@
   "author": "shketov",
   "license": "ISC",
   "dependencies": {
-    "fs": "0.0.1-security",
     "minecraft-protocol": "^1.25.0",
     "moment": "^2.29.1"
   }
